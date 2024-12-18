@@ -1,0 +1,78 @@
+@page
+@model SecureVault.Web.Pages.Account.TwoFactorVerifyModel
+@{
+    ViewData["Title"] = "Two-Factor Verification";
+    Layout = "_LoginLayout";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Two-Factor Verification</h2>
+                    
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                    
+                    <form method="post" class="needs-validation" novalidate>
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Code" class="form-label">Verification Code</label>
+                            <input asp-for="Code" class="form-control" placeholder="Enter 6-digit code" required maxlength="6" />
+                            <div class="invalid-feedback">
+                                Please enter the verification code from your authenticator app.
+                            </div>
+                            <small class="form-text text-muted">
+                                Enter the 6-digit code from your authenticator app
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Verify</button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-0">Lost access to your authenticator app?</p>
+                        <a asp-page="./RecoveryCode" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">
+                            Use a recovery code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Enable Bootstrap form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Auto-focus the code input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('Code').focus();
+        });
+    </script>
+}

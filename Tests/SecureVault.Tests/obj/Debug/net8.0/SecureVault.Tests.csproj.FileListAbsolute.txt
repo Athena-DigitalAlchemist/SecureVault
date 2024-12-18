@@ -1,0 +1,6 @@
+C:\Users\Smile_bydefault\Desktop\SecureVault\tests\SecureVault.Tests\bin\Debug\net8.0\.msCoverageSourceRootsMapping_SecureVault.Tests
+C:\Users\Smile_bydefault\Desktop\SecureVault\tests\SecureVault.Tests\obj\Debug\net8.0\SecureVault.Tests.csproj.AssemblyReference.cache
+C:\Users\Smile_bydefault\Desktop\SecureVault\tests\SecureVault.Tests\obj\Debug\net8.0\SecureVault.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Smile_bydefault\Desktop\SecureVault\tests\SecureVault.Tests\obj\Debug\net8.0\SecureVault.Tests.AssemblyInfoInputs.cache
+C:\Users\Smile_bydefault\Desktop\SecureVault\tests\SecureVault.Tests\obj\Debug\net8.0\SecureVault.Tests.AssemblyInfo.cs
+C:\Users\Smile_bydefault\Desktop\SecureVault\tests\SecureVault.Tests\obj\Debug\net8.0\SecureVault.Tests.csproj.CoreCompileInputs.cache

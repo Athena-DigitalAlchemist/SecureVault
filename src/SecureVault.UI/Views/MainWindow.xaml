@@ -1,0 +1,137 @@
+<Window x:Class="SecureVault.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:SecureVault.UI.Views"
+        mc:Ignorable="d"
+        Title="SecureVault" Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Window.Resources>
+        <DataTemplate x:Key="LoginTemplate">
+            <local:LoginView />
+        </DataTemplate>
+        <DataTemplate x:Key="DashboardTemplate">
+            <local:DashboardView />
+        </DataTemplate>
+        <DataTemplate x:Key="PasswordListTemplate">
+            <local:PasswordListView />
+        </DataTemplate>
+        <DataTemplate x:Key="SecureNotesTemplate">
+            <local:SecureNotesView />
+        </DataTemplate>
+        <DataTemplate x:Key="SecureFilesTemplate">
+            <local:SecureFilesView />
+        </DataTemplate>
+        <DataTemplate x:Key="SettingsTemplate">
+            <local:SettingsView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding IsMenuOpen}">
+            <!-- Left Menu -->
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="220">
+                    <StackPanel DockPanel.Dock="Top" Margin="0,20">
+                        <Image Source="/Assets/Icons/vault.png" Height="64" Width="64" Margin="0,0,0,20"/>
+                        <TextBlock Text="SecureVault" Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                 HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    </StackPanel>
+
+                    <ListBox x:Name="MenuItems" SelectedIndex="0" Margin="0,20">
+                        <ListBoxItem Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ViewDashboard" Margin="0,0,10,0"/>
+                                <TextBlock Text="Dashboard"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Command="{Binding NavigateCommand}" CommandParameter="Passwords">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Key" Margin="0,0,10,0"/>
+                                <TextBlock Text="Passwords"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Command="{Binding NavigateCommand}" CommandParameter="Notes">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Note" Margin="0,0,10,0"/>
+                                <TextBlock Text="Secure Notes"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Command="{Binding NavigateCommand}" CommandParameter="Files">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="File" Margin="0,0,10,0"/>
+                                <TextBlock Text="Secure Files"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Command="{Binding NavigateCommand}" CommandParameter="Settings">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Settings" Margin="0,0,10,0"/>
+                                <TextBlock Text="Settings"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+
+                    <Button DockPanel.Dock="Bottom" Margin="20"
+                            Command="{Binding LogoutCommand}"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Logout" Margin="0,0,10,0"/>
+                            <TextBlock Text="Logout"/>
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+            <!-- Main Content -->
+            <DockPanel>
+                <materialDesign:ColorZone Mode="PrimaryDark" DockPanel.Dock="Top"
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                        Height="64">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                    IsChecked="{Binding IsMenuOpen, Mode=TwoWay}"
+                                    Margin="20,0"/>
+
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentView.Title}"
+                                 Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                 VerticalAlignment="Center"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+
+                <ContentControl Content="{Binding CurrentView}">
+                    <ContentControl.Resources>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentView}" Value="{x:Null}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <local:LoginView/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Resources>
+                </ContentControl>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
+</Window>

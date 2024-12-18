@@ -1,0 +1,9 @@
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\Views\CreateVaultWindow.g.cs
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\Views\LoginWindow.g.cs
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\Views\PasswordGeneratorDialog.g.cs
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\App.g.cs
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\SecureVault.App_MarkupCompile.cache
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\SecureVault.App_MarkupCompile.lref
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\MainWindow.g.cs
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\Views\PasswordDialog.g.cs
+C:\Users\Smile_bydefault\CascadeProjects\SecureVault\src\SecureVault.App\obj\Debug\net9.0-windows\SecureVault.App.csproj.AssemblyReference.cache

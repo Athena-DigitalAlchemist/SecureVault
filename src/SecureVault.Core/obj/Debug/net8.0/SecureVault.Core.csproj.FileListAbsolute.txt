@@ -1,0 +1,5 @@
+C:\Users\Smile_bydefault\Desktop\SecureVault\src\SecureVault.Core\obj\Debug\net8.0\SecureVault.Core.csproj.AssemblyReference.cache
+C:\Users\Smile_bydefault\Desktop\SecureVault\src\SecureVault.Core\obj\Debug\net8.0\SecureVault.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Smile_bydefault\Desktop\SecureVault\src\SecureVault.Core\obj\Debug\net8.0\SecureVault.Core.AssemblyInfoInputs.cache
+C:\Users\Smile_bydefault\Desktop\SecureVault\src\SecureVault.Core\obj\Debug\net8.0\SecureVault.Core.AssemblyInfo.cs
+C:\Users\Smile_bydefault\Desktop\SecureVault\src\SecureVault.Core\obj\Debug\net8.0\SecureVault.Core.csproj.CoreCompileInputs.cache

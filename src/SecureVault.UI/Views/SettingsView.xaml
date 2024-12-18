@@ -1,0 +1,209 @@
+<![CDATA[<UserControl x:Class="SecureVault.UI.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SecureVault.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1080">
+    
+    <ScrollViewer>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Text="Settings"
+                     Style="{StaticResource TitleTextStyle}"
+                     Margin="0,0,0,30"/>
+
+            <!-- Settings Sections -->
+            <StackPanel Grid.Row="1" Spacing="30">
+                <!-- Security Settings -->
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="8"
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Security Settings"
+                                 Style="{StaticResource HeaderTextStyle}"
+                                 Margin="0,0,0,20"/>
+
+                        <!-- Master Password -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Master Password"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     FontWeight="SemiBold"/>
+                            <Button Content="Change Master Password"
+                                    Command="{Binding ChangeMasterPasswordCommand}"
+                                    Style="{StaticResource PrimaryButton}"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,10,0,0"/>
+                        </StackPanel>
+
+                        <!-- Password Requirements -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Password Requirements"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     FontWeight="SemiBold"/>
+                            <StackPanel Margin="0,10,0,0">
+                                <CheckBox Content="Require uppercase letters"
+                                         IsChecked="{Binding RequireUppercase}"
+                                         Margin="0,0,0,5"/>
+                                <CheckBox Content="Require lowercase letters"
+                                         IsChecked="{Binding RequireLowercase}"
+                                         Margin="0,0,0,5"/>
+                                <CheckBox Content="Require numbers"
+                                         IsChecked="{Binding RequireNumbers}"
+                                         Margin="0,0,0,5"/>
+                                <CheckBox Content="Require special characters"
+                                         IsChecked="{Binding RequireSpecialChars}"
+                                         Margin="0,0,0,5"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="Minimum password length: "
+                                         Style="{StaticResource BodyTextStyle}"/>
+                                <TextBox Text="{Binding MinPasswordLength}"
+                                         Width="60"
+                                         Style="{StaticResource ModernTextBox}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Auto-Lock -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Auto-Lock"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding AutoLockTimes}"
+                                     SelectedItem="{Binding SelectedAutoLockTime}"
+                                     Style="{StaticResource ModernComboBox}"
+                                     Width="200"
+                                     HorizontalAlignment="Left"
+                                     Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Encryption Settings -->
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="8"
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Encryption Settings"
+                                 Style="{StaticResource HeaderTextStyle}"
+                                 Margin="0,0,0,20"/>
+
+                        <!-- Encryption Algorithm -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Encryption Algorithm"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding EncryptionAlgorithms}"
+                                     SelectedItem="{Binding SelectedEncryptionAlgorithm}"
+                                     Style="{StaticResource ModernComboBox}"
+                                     Width="200"
+                                     HorizontalAlignment="Left"
+                                     Margin="0,10,0,0"/>
+                        </StackPanel>
+
+                        <!-- Key Rotation -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Key Rotation"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding KeyRotationIntervals}"
+                                     SelectedItem="{Binding SelectedKeyRotationInterval}"
+                                     Style="{StaticResource ModernComboBox}"
+                                     Width="200"
+                                     HorizontalAlignment="Left"
+                                     Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Backup Settings -->
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="8"
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Backup Settings"
+                                 Style="{StaticResource HeaderTextStyle}"
+                                 Margin="0,0,0,20"/>
+
+                        <!-- Auto Backup -->
+                        <StackPanel Margin="0,0,0,15">
+                            <CheckBox Content="Enable automatic backups"
+                                     IsChecked="{Binding EnableAutoBackup}"
+                                     Margin="0,0,0,10"/>
+                            
+                            <ComboBox ItemsSource="{Binding BackupIntervals}"
+                                     SelectedItem="{Binding SelectedBackupInterval}"
+                                     Style="{StaticResource ModernComboBox}"
+                                     Width="200"
+                                     HorizontalAlignment="Left"
+                                     IsEnabled="{Binding EnableAutoBackup}"/>
+                        </StackPanel>
+
+                        <!-- Backup Location -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Backup Location"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     FontWeight="SemiBold"/>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBox Text="{Binding BackupLocation}"
+                                         Style="{StaticResource ModernTextBox}"
+                                         IsReadOnly="True"/>
+                                
+                                <Button Grid.Column="1"
+                                        Content="Browse"
+                                        Command="{Binding SelectBackupLocationCommand}"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Margin="10,0,0,0"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Manual Backup -->
+                        <Button Content="Create Backup Now"
+                                Command="{Binding CreateBackupCommand}"
+                                Style="{StaticResource PrimaryButton}"
+                                HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Security Check Settings -->
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="8"
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Security Check Settings"
+                                 Style="{StaticResource HeaderTextStyle}"
+                                 Margin="0,0,0,20"/>
+
+                        <!-- Password Breach Monitoring -->
+                        <StackPanel Margin="0,0,0,15">
+                            <CheckBox Content="Enable password breach monitoring"
+                                     IsChecked="{Binding EnableBreachMonitoring}"
+                                     Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Check passwords against known data breaches to ensure they haven't been compromised."
+                                     Style="{StaticResource BodyTextStyle}"
+                                     TextWrapping="Wrap"
+                                     Margin="0,0,0,10"/>
+                            
+                            <Button Content="Check Passwords Now"
+                                    Command="{Binding CheckPasswordsCommand}"
+                                    Style="{StaticResource PrimaryButton}"
+                                    HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>]]>

@@ -1,0 +1,172 @@
+@page
+@model SecureVault.Web.Pages.Passwords.IndexModel
+@{
+    ViewData["Title"] = "Password Manager";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Password Manager</h2>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPasswordModal">
+                <i class="fas fa-plus"></i> Add Password
+            </button>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Search passwords...">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select id="categoryFilter" class="form-select">
+                <option value="">All Categories</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <!-- Password List -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="passwordTable">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Username</th>
+                            <th>Website</th>
+                            <th>Category</th>
+                            <th>Last Modified</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entry in Model.Passwords)
+                        {
+                            <tr data-category="@entry.Category">
+                                <td>@entry.Title</td>
+                                <td>@entry.Username</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(entry.Website))
+                                    {
+                                        <a href="@entry.Website" target="_blank">@entry.Website</a>
+                                    }
+                                </td>
+                                <td>@entry.Category</td>
+                                <td>@entry.LastModified.ToString("g")</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary copy-password"
+                                                data-id="@entry.Id" title="Copy Password">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary edit-password"
+                                                data-id="@entry.Id" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger delete-password"
+                                                data-id="@entry.Id" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="passwordForm" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="passwordId" name="Id" />
+                    
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="Title" required
+                               data-val="true" data-val-required="Title is required">
+                        <span class="text-danger" data-valmsg-for="Title"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="Username" required
+                               data-val="true" data-val-required="Username is required">
+                        <span class="text-danger" data-valmsg-for="Username"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="Password" required
+                                   data-val="true" data-val-required="Password is required"
+                                   data-val-regex="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                                   data-val-regex-msg="Password must be at least 8 characters and contain letters, numbers, and special characters">
+                            <button type="button" class="btn btn-outline-secondary toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary generate-password">
+                                <i class="fas fa-magic"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength mt-2"></div>
+                        <span class="text-danger" data-valmsg-for="Password"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="website" class="form-label">Website</label>
+                        <input type="url" class="form-control" id="website" name="Website"
+                               data-val="true" data-val-url="Please enter a valid URL">
+                        <span class="text-danger" data-valmsg-for="Website"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="Category">
+                            <option value="">Select Category</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="Notes" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/password-manager.js"></script>
+}

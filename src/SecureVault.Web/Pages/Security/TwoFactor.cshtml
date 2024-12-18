@@ -1,0 +1,84 @@
+@page
+@model SecureVault.Web.Pages.Security.TwoFactorModel
+@{
+    ViewData["Title"] = "Two-Factor Authentication";
+}
+
+<div class="container mt-4">
+    <h2>Two-Factor Authentication</h2>
+    <hr />
+
+    <div id="twoFactorStatus" class="mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Status</h5>
+                <p class="card-text">
+                    Two-factor authentication is currently
+                    <span id="statusBadge" class="badge"></span>
+                </p>
+                <button id="setupButton" class="btn btn-primary" style="display: none;">Set Up Two-Factor Authentication</button>
+                <button id="disableButton" class="btn btn-danger" style="display: none;">Disable Two-Factor Authentication</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setupSection" style="display: none;">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Setup Instructions</h5>
+                <ol class="setup-steps">
+                    <li>Download and install an authenticator app on your mobile device:
+                        <ul>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator (Android)</a></li>
+                            <li><a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">Google Authenticator (iOS)</a></li>
+                            <li><a href="https://authy.com/download/" target="_blank">Authy (Multiple platforms)</a></li>
+                        </ul>
+                    </li>
+                    <li>Scan the QR code below with your authenticator app</li>
+                    <li>Enter the verification code shown in your app to complete setup</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">QR Code</h5>
+                <div id="qrCode" class="mb-3"></div>
+                <p class="mb-3">Can't scan the QR code? Use this key instead:</p>
+                <code id="manualKey" class="user-select-all"></code>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Verify Setup</h5>
+                <div class="form-group">
+                    <label for="verificationCode">Enter the 6-digit code from your authenticator app:</label>
+                    <input type="text" class="form-control" id="verificationCode" maxlength="6" />
+                </div>
+                <button id="verifyButton" class="btn btn-primary mt-3">Verify and Enable</button>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Recovery Codes</h5>
+                <p class="card-text">
+                    Save these recovery codes in a secure location. If you lose access to your authenticator app,
+                    you can use these codes to regain access to your account. Each code can only be used once.
+                </p>
+                <div id="recoveryCodes" class="bg-light p-3 rounded">
+                    <pre class="mb-0"></pre>
+                </div>
+                <button id="copyRecoveryCodesButton" class="btn btn-secondary mt-3">
+                    <i class="fas fa-copy"></i> Copy Recovery Codes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
+    <script src="~/js/two-factor.js"></script>
+}

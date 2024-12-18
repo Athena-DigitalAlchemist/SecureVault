@@ -1,0 +1,33 @@
+{
+  "solution": "SecureVault.sln",
+  "configurations": {
+    "Release": {
+      "framework": "net8.0-windows",
+      "runtime": "win-x64",
+      "selfContained": true,
+      "publishSingleFile": true,
+      "output": "./publish",
+      "trimMode": "link",
+      "optimizationPreference": "speed"
+    }
+  },
+  "artifacts": {
+    "includes": [
+      "docs/*",
+      "LICENSE",
+      "README.md"
+    ]
+  },
+  "installer": {
+    "productName": "SecureVault",
+    "version": "1.0.0",
+    "publisher": "SecureVault Team",
+    "description": "Secure Password Management Application",
+    "setupIcon": "assets/icon.ico",
+    "installDirectory": "%PROGRAMFILES%\\SecureVault",
+    "shortcuts": {
+      "desktop": true,
+      "startMenu": true
+    }
+  }
+}

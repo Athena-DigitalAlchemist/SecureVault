@@ -1,0 +1,93 @@
+<Window x:Class="SecureVault.App.Views.CreateVaultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SecureVault.App.Views"
+        mc:Ignorable="d"
+        Title="Create New Vault" 
+        Height="500" 
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Create Your Vault" 
+                     FontSize="28" 
+                     FontWeight="Bold" 
+                     HorizontalAlignment="Center"/>
+            <TextBlock Text="Choose a strong master password to protect your data" 
+                     FontSize="14" 
+                     Foreground="Gray" 
+                     HorizontalAlignment="Center"
+                     Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Create Vault Form -->
+        <StackPanel Grid.Row="1" Width="400">
+            <!-- Password Requirements -->
+            <GroupBox Header="Password Requirements" Margin="0,10,0,20">
+                <StackPanel Margin="10">
+                    <TextBlock Text="• At least 12 characters long" x:Name="LengthRequirement"/>
+                    <TextBlock Text="• Contains uppercase letters" x:Name="UppercaseRequirement"/>
+                    <TextBlock Text="• Contains lowercase letters" x:Name="LowercaseRequirement"/>
+                    <TextBlock Text="• Contains numbers" x:Name="NumberRequirement"/>
+                    <TextBlock Text="• Contains special characters" x:Name="SpecialRequirement"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Password Input -->
+            <Label Content="Master Password:"/>
+            <PasswordBox x:Name="MasterPasswordBox" 
+                        Height="35" 
+                        Margin="0,5,0,10"
+                        PasswordChanged="MasterPasswordBox_PasswordChanged"/>
+
+            <Label Content="Confirm Password:"/>
+            <PasswordBox x:Name="ConfirmPasswordBox" 
+                        Height="35" 
+                        Margin="0,5,0,10"
+                        PasswordChanged="ConfirmPasswordBox_PasswordChanged"/>
+
+            <!-- Password Strength Indicator -->
+            <ProgressBar x:Name="StrengthIndicator" 
+                        Height="4" 
+                        Margin="0,10"/>
+            <TextBlock x:Name="StrengthText" 
+                      Text="Password Strength: None" 
+                      HorizontalAlignment="Center"
+                      Margin="0,0,0,20"/>
+
+            <!-- Error Message -->
+            <TextBlock x:Name="ErrorMessageText" 
+                      Foreground="Red" 
+                      TextWrapping="Wrap"
+                      TextAlignment="Center"
+                      Margin="0,0,0,20"/>
+
+            <!-- Create Button -->
+            <Button x:Name="CreateVaultButton" 
+                    Content="Create Vault" 
+                    Height="40"
+                    FontSize="16"
+                    IsEnabled="False"
+                    Click="CreateVaultButton_Click"/>
+        </StackPanel>
+
+        <!-- Back Link -->
+        <TextBlock Grid.Row="2" 
+                   Text="Back to Login" 
+                   Foreground="Blue"
+                   HorizontalAlignment="Center"
+                   Cursor="Hand"
+                   MouseDown="BackToLogin_MouseDown"/>
+    </Grid>
+</Window>

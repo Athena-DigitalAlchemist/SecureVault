@@ -1,0 +1,164 @@
+<![CDATA[<UserControl x:Class="SecureVault.UI.Views.SecureNotesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SecureVault.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1080">
+    
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Notes List Panel -->
+        <DockPanel Grid.Column="0">
+            <!-- Header -->
+            <Grid DockPanel.Dock="Top" Margin="0,0,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Secure Notes"
+                             Style="{StaticResource HeaderTextStyle}"/>
+
+                    <Button Grid.Column="1"
+                            Content="New Note"
+                            Command="{Binding AddNoteCommand}"
+                            Style="{StaticResource PrimaryButton}"/>
+                </Grid>
+
+                <TextBox Grid.Row="1"
+                         Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource ModernTextBox}"
+                         PlaceholderText="Search notes..."
+                         Margin="0,10,0,0"/>
+            </Grid>
+
+            <!-- Notes List -->
+            <ListView ItemsSource="{Binding Notes}"
+                      SelectedItem="{Binding SelectedNote}"
+                      Style="{StaticResource ModernListBox}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource BackgroundLightBrush}"
+                                CornerRadius="8"
+                                Padding="15"
+                                Margin="0,5">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}"
+                                         Style="{StaticResource HeaderTextStyle}"/>
+                                
+                                <TextBlock Text="{Binding LastModified, StringFormat={}Modified: {0:g}}"
+                                         Style="{StaticResource CaptionTextStyle}"
+                                         Margin="0,5,0,0"/>
+                                
+                                <TextBlock Text="{Binding Preview}"
+                                         Style="{StaticResource BodyTextStyle}"
+                                         TextTrimming="CharacterEllipsis"
+                                         MaxHeight="40"
+                                         Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel>
+
+        <!-- Note Editor -->
+        <Border Grid.Column="1"
+                Background="{StaticResource BackgroundLightBrush}"
+                CornerRadius="8"
+                Padding="20"
+                Margin="20,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title -->
+                <TextBox Text="{Binding SelectedNote.Title, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource ModernTextBox}"
+                         FontSize="24"
+                         FontWeight="SemiBold"
+                         Background="Transparent"
+                         BorderThickness="0"/>
+
+                <!-- Category and Tags -->
+                <StackPanel Grid.Row="1" 
+                          Orientation="Horizontal"
+                          Margin="0,10,0,20">
+                    <ComboBox ItemsSource="{Binding Categories}"
+                             SelectedItem="{Binding SelectedNote.Category}"
+                             Style="{StaticResource ModernComboBox}"
+                             Width="200"
+                             Margin="0,0,10,0"/>
+
+                    <ItemsControl ItemsSource="{Binding SelectedNote.Tags}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource PrimaryLightBrush}"
+                                        CornerRadius="4"
+                                        Padding="8,4"
+                                        Margin="0,0,5,5">
+                                    <TextBlock Text="{Binding}"
+                                             Foreground="White"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Button Content="Add Tag"
+                            Command="{Binding AddTagCommand}"
+                            Style="{StaticResource PrimaryButton}"
+                            Background="Transparent"
+                            BorderBrush="{StaticResource PrimaryBrush}"
+                            Foreground="{StaticResource PrimaryBrush}"/>
+                </StackPanel>
+
+                <!-- Note Content -->
+                <TextBox Grid.Row="2"
+                         Text="{Binding SelectedNote.Content, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource ModernTextBox}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Action Buttons -->
+                <StackPanel Grid.Row="3"
+                          Orientation="Horizontal"
+                          HorizontalAlignment="Right"
+                          Margin="0,20,0,0">
+                    <Button Content="Delete"
+                            Command="{Binding DeleteNoteCommand}"
+                            Style="{StaticResource PrimaryButton}"
+                            Background="{StaticResource ErrorBrush}"
+                            Margin="0,0,10,0"/>
+                    
+                    <Button Content="Save"
+                            Command="{Binding SaveNoteCommand}"
+                            Style="{StaticResource PrimaryButton}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>]]>

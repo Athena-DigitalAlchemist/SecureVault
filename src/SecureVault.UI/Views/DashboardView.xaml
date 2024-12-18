@@ -1,0 +1,299 @@
+<![CDATA[<UserControl x:Class="SecureVault.UI.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:SecureVault.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1080">
+
+    <UserControl.Resources>
+        <Style x:Key="DashboardCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" 
+                                    ShadowDepth="1" 
+                                    Direction="270" 
+                                    Color="#20000000"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="QuickActionButtonStyle" 
+               BasedOn="{StaticResource MaterialDesignFlatButton}" 
+               TargetType="Button">
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Welcome Section -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                <TextBlock Text="{Binding WelcomeMessage}"
+                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                         Foreground="{StaticResource PrimaryBrush}"/>
+                <TextBlock Text="{Binding LastLoginMessage}"
+                         Style="{StaticResource MaterialDesignBody1TextBlock}"
+                         Foreground="{StaticResource TextSecondaryBrush}"
+                         Margin="0,8,0,0"/>
+            </StackPanel>
+
+            <!-- Quick Actions -->
+            <Grid Grid.Row="1" Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Add Password -->
+                <Button Grid.Column="0" 
+                        Style="{StaticResource QuickActionButtonStyle}"
+                        Command="{Binding AddPasswordCommand}">
+                    <StackPanel>
+                        <md:PackIcon Kind="KeyPlus" 
+                                   Width="24" Height="24"
+                                   Foreground="{StaticResource PrimaryBrush}"/>
+                        <TextBlock Text="Add Password"
+                                 Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                 Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Add Secure Note -->
+                <Button Grid.Column="1" 
+                        Style="{StaticResource QuickActionButtonStyle}"
+                        Command="{Binding AddSecureNoteCommand}">
+                    <StackPanel>
+                        <md:PackIcon Kind="NoteAdd" 
+                                   Width="24" Height="24"
+                                   Foreground="{StaticResource SecondaryBrush}"/>
+                        <TextBlock Text="New Note"
+                                 Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                 Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Upload File -->
+                <Button Grid.Column="2" 
+                        Style="{StaticResource QuickActionButtonStyle}"
+                        Command="{Binding UploadFileCommand}">
+                    <StackPanel>
+                        <md:PackIcon Kind="FileUpload" 
+                                   Width="24" Height="24"
+                                   Foreground="{StaticResource AccentBrush}"/>
+                        <TextBlock Text="Upload File"
+                                 Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                 Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Generate Password -->
+                <Button Grid.Column="3" 
+                        Style="{StaticResource QuickActionButtonStyle}"
+                        Command="{Binding GeneratePasswordCommand}">
+                    <StackPanel>
+                        <md:PackIcon Kind="ShieldKey" 
+                                   Width="24" Height="24"
+                                   Foreground="{StaticResource SuccessBrush}"/>
+                        <TextBlock Text="Generate Password"
+                                 Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                 Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <!-- Status Cards -->
+            <Grid Grid.Row="2" Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Passwords Count -->
+                <Border Grid.Column="0" 
+                        Style="{StaticResource DashboardCardStyle}"
+                        Margin="0,0,12,0"
+                        Padding="20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <md:PackIcon Kind="Key" 
+                                   Width="32" Height="32"
+                                   Foreground="{StaticResource PrimaryBrush}"
+                                   Margin="0,0,16,0"/>
+                        
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Passwords"
+                                     Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                     Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding PasswordCount}"
+                                     Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                     Foreground="{StaticResource PrimaryBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Secure Notes -->
+                <Border Grid.Column="1" 
+                        Style="{StaticResource DashboardCardStyle}"
+                        Margin="12,0"
+                        Padding="20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <md:PackIcon Kind="Note" 
+                                   Width="32" Height="32"
+                                   Foreground="{StaticResource SecondaryBrush}"
+                                   Margin="0,0,16,0"/>
+                        
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Secure Notes"
+                                     Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                     Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding SecureNotesCount}"
+                                     Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                     Foreground="{StaticResource SecondaryBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Secure Files -->
+                <Border Grid.Column="2" 
+                        Style="{StaticResource DashboardCardStyle}"
+                        Margin="12,0"
+                        Padding="20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <md:PackIcon Kind="File" 
+                                   Width="32" Height="32"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,0,16,0"/>
+                        
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Secure Files"
+                                     Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                     Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding SecureFilesCount}"
+                                     Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                     Foreground="{StaticResource AccentBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Last Backup -->
+                <Border Grid.Column="3" 
+                        Style="{StaticResource DashboardCardStyle}"
+                        Margin="12,0,0,0"
+                        Padding="20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <md:PackIcon Kind="Backup" 
+                                   Width="32" Height="32"
+                                   Foreground="{StaticResource WarningBrush}"
+                                   Margin="0,0,16,0"/>
+                        
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Last Backup"
+                                     Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                     Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding LastBackupTime}"
+                                     Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                     Foreground="{StaticResource WarningBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Recent Items -->
+            <Border Grid.Row="3" 
+                    Style="{StaticResource DashboardCardStyle}"
+                    Padding="24">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Recent Items"
+                             Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                             Margin="0,0,0,16"/>
+
+                    <ListView Grid.Row="1" 
+                             ItemsSource="{Binding RecentItems}"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <md:PackIcon Kind="{Binding IconKind}" 
+                                               Width="24" Height="24"
+                                               Margin="0,0,16,0"
+                                               Foreground="{StaticResource PrimaryBrush}"/>
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding Title}"
+                                                 Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                                        <TextBlock Text="{Binding LastModified}"
+                                                 Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                 Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    </StackPanel>
+
+                                    <Button Grid.Column="2"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Command="{Binding DataContext.OpenItemCommand, 
+                                                      RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}">
+                                        <md:PackIcon Kind="OpenInNew" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>]]>

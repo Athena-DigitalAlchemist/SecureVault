@@ -1,0 +1,78 @@
+@page
+@model SecureVault.Web.Pages.Account.RecoveryCodeModel
+@{
+    ViewData["Title"] = "Recovery Code";
+    Layout = "_LoginLayout";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Use Recovery Code</h2>
+                    
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                    
+                    <form method="post" class="needs-validation" novalidate>
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Code" class="form-label">Recovery Code</label>
+                            <input asp-for="Code" class="form-control" placeholder="Enter recovery code" required />
+                            <div class="invalid-feedback">
+                                Please enter a recovery code.
+                            </div>
+                            <small class="form-text text-muted">
+                                Enter one of your recovery codes. Remember that each code can only be used once.
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Verify</button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-0">Have access to your authenticator app?</p>
+                        <a asp-page="./TwoFactorVerify" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">
+                            Use authenticator code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Enable Bootstrap form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Auto-focus the code input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('Code').focus();
+        });
+    </script>
+}
